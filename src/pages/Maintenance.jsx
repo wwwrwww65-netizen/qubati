@@ -68,14 +68,17 @@ const Maintenance = () => {
 
   return (
     <div>
-      <div className="flex-between mb-6">
-        <h1 style={{ fontSize: '1.5rem', fontWeight: 'bold' }}>ورشة الصيانة</h1>
-        <button className="btn btn-primary" onClick={() => setShowModal(true)}>
-          <Plus size={18} /> تسجيل عملية صيانة
+      <div className="flex-between mb-8">
+        <div>
+          <h1 style={{ fontSize: '2.5rem', fontWeight: '900', color: 'var(--text-primary)' }}>ورشة الصيانة</h1>
+          <p style={{ color: 'var(--text-secondary)', fontSize: '1.1rem' }}>إدارة عمليات الإصلاح والصيانة الدورية</p>
+        </div>
+        <button className="btn btn-primary" onClick={() => setShowModal(true)} style={{ padding: '1rem 2rem', fontSize: '1.1rem' }}>
+          <Plus size={24} /> تسجيل عملية صيانة
         </button>
       </div>
 
-      <div className="card mb-6">
+      <div className="card mb-8">
         <div className="grid-4" style={{ alignItems: 'flex-end' }}>
           <div className="form-group mb-0">
             <label className="form-label">المهندس</label>
@@ -142,40 +145,16 @@ const Maintenance = () => {
       </div>
 
       {showModal && createPortal(
-        <div 
-          style={{
-            position: 'fixed',
-            top: 0, left: 0, right: 0, bottom: 0,
-            backgroundColor: 'rgba(0,0,0,0.8)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            zIndex: 999999
-          }}
-        >
-          <div 
-            style={{
-              backgroundColor: 'var(--bg-secondary, #1e293b)',
-              color: 'var(--text-primary, #ffffff)',
-              borderRadius: '8px',
-              width: '90%',
-              maxWidth: '500px',
-              maxHeight: '90vh',
-              display: 'flex',
-              flexDirection: 'column',
-              boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1)',
-              border: '1px solid var(--border-color, #334155)',
-              overflow: 'hidden'
-            }}
-          >
-            <div style={{ padding: '1.5rem', borderBottom: '1px solid var(--border-color, #334155)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <h2 style={{ fontSize: '1.25rem', margin: 0 }}>تسجيل عملية صيانة جديدة</h2>
-              <button type="button" onClick={() => setShowModal(false)} style={{ background: 'transparent', border: 'none', color: 'inherit', cursor: 'pointer' }}><X size={20} /></button>
+        <div className="modal-overlay" onClick={() => setShowModal(false)}>
+          <div className="modal" onClick={e => e.stopPropagation()}>
+            <div className="modal-header">
+              <h2>تسجيل عملية صيانة جديدة</h2>
+              <button className="btn-icon" onClick={() => setShowModal(false)}><X size={24} /></button>
             </div>
             
-            <div style={{ padding: '1.5rem', overflowY: 'auto' }}>
+            <div className="modal-body">
               <form onSubmit={handleSubmit}>
-                <div className="grid-2 mb-4">
+                <div className="grid-2">
                   <div className="form-group">
                     <label className="form-label">اسم المهندس</label>
                     <select className="form-control" value={formData.engineer} onChange={e => setFormData({...formData, engineer: e.target.value})}>
@@ -190,7 +169,7 @@ const Maintenance = () => {
                     <input type="text" className="form-control" placeholder="مثال: 1003" required value={formData.pointNo} onChange={e => setFormData({...formData, pointNo: e.target.value})} />
                   </div>
                 </div>
-                <div className="grid-2 mb-4">
+                <div className="grid-2">
                   <div className="form-group">
                     <label className="form-label">اسم العميل كامل</label>
                     <input type="text" className="form-control" required value={formData.customer} onChange={e => setFormData({...formData, customer: e.target.value})} />
@@ -200,11 +179,11 @@ const Maintenance = () => {
                     <input type="text" className="form-control" required value={formData.phone} onChange={e => setFormData({...formData, phone: e.target.value})} />
                   </div>
                 </div>
-                <div className="form-group mb-4">
+                <div className="form-group">
                   <label className="form-label">نوع التغيير / الإصلاح</label>
                   <input type="text" className="form-control" placeholder="تغيير زيت، بواجي..." required value={formData.type} onChange={e => setFormData({...formData, type: e.target.value})} />
                 </div>
-                <div className="grid-2 mb-4">
+                <div className="grid-2">
                   <div className="form-group">
                     <label className="form-label">المبلغ</label>
                     <input type="number" className="form-control" required value={formData.amount} onChange={e => setFormData({...formData, amount: e.target.value})} />
@@ -217,13 +196,13 @@ const Maintenance = () => {
                     </select>
                   </div>
                 </div>
-                <div className="form-group mb-4">
+                <div className="form-group">
                   <label className="form-label">مرفقات (صورة القطع/المركبة)</label>
                   <input type="file" className="form-control" accept="image/*" />
                 </div>
-                <div style={{ marginTop: '2rem', display: 'flex', justifyContent: 'flex-end', gap: '1rem' }}>
-                  <button type="button" className="btn" onClick={() => setShowModal(false)} style={{ border: '1px solid var(--border-color)', backgroundColor: 'transparent', color: 'inherit' }}>إلغاء</button>
-                  <button type="submit" className="btn btn-primary" style={{ backgroundColor: '#3b82f6', color: 'white' }}>حفظ وترحيل للمحفظة</button>
+                <div className="modal-footer">
+                  <button type="button" className="btn" onClick={() => setShowModal(false)} style={{ border: '1px solid var(--border-color)' }}>إلغاء</button>
+                  <button type="submit" className="btn btn-primary">حفظ وترحيل للمحفظة</button>
                 </div>
               </form>
             </div>

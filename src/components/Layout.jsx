@@ -26,12 +26,12 @@ const Layout = () => {
   }, [isDark]);
 
   const navItems = [
-    { path: '/', label: 'لوحة القيادة', icon: <LayoutDashboard size={20} /> },
-    { path: '/wallet', label: 'المحفظة المالية', icon: <Wallet size={20} /> },
-    { path: '/maintenance', label: 'ورشة الصيانة', icon: <Wrench size={20} /> },
-    { path: '/inspection', label: 'الفحص الدوري', icon: <ClipboardCheck size={20} /> },
-    { path: '/trips', label: 'حجز الرحلات', icon: <Bus size={20} /> },
-    { path: '/users', label: 'إدارة المستخدمين', icon: <Users size={20} /> },
+    { path: '/', label: 'لوحة القيادة', icon: <LayoutDashboard size={24} /> },
+    { path: '/wallet', label: 'المحفظة المالية', icon: <Wallet size={24} /> },
+    { path: '/maintenance', label: 'ورشة الصيانة', icon: <Wrench size={24} /> },
+    { path: '/inspection', label: 'الفحص الدوري', icon: <ClipboardCheck size={24} /> },
+    { path: '/trips', label: 'حجز الرحلات', icon: <Bus size={24} /> },
+    { path: '/users', label: 'إدارة المستخدمين', icon: <Users size={24} /> },
   ];
 
   return (
@@ -39,7 +39,8 @@ const Layout = () => {
       {/* Sidebar */}
       <aside className="sidebar">
         <div className="sidebar-header">
-          نظام القباطي ERP
+          <span>القباطي</span>
+          <span style={{ color: 'var(--text-primary)', opacity: 0.5, marginRight: '5px' }}>ERP</span>
         </div>
         <nav className="sidebar-nav">
           {navItems.map((item) => (
@@ -48,14 +49,14 @@ const Layout = () => {
               to={item.path} 
               className={`nav-item ${location.pathname === item.path ? 'active' : ''}`}
             >
-              {item.icon}
+              <span className="nav-icon">{item.icon}</span>
               <span>{item.label}</span>
             </Link>
           ))}
         </nav>
-        <div className="sidebar-footer" style={{ padding: '1.5rem', borderTop: '1px solid rgba(255,255,255,0.1)' }}>
-          <button className="nav-item" style={{ width: '100%', background: 'transparent', border: 'none', cursor: 'pointer' }}>
-            <LogOut size={20} />
+        <div className="sidebar-footer" style={{ padding: '1rem', borderTop: '1px solid var(--border-color)' }}>
+          <button className="nav-item logout-btn" style={{ width: '100%', background: 'transparent', border: 'none', cursor: 'pointer', color: 'var(--danger-color)' }}>
+            <LogOut size={24} />
             <span>تسجيل الخروج</span>
           </button>
         </div>
@@ -65,18 +66,18 @@ const Layout = () => {
       <main className="main-content">
         <header className="header">
           <div className="flex-between" style={{ width: '100%' }}>
-            <div className="flex-between" style={{ gap: '1rem' }}>
+            <div className="flex-between" style={{ gap: '1.5rem' }}>
               <button className="btn-icon">
-                <Menu size={24} />
+                <Menu size={28} />
               </button>
-              <h2 style={{ fontSize: '1.25rem', fontWeight: 'bold' }}>مرحباً بك، مدير النظام</h2>
+              <h2 style={{ fontSize: '1.5rem', fontWeight: '800' }}>مرحباً بك، مدير النظام 👋</h2>
             </div>
             
-            <div className="flex-between" style={{ gap: '1rem' }}>
-              <button className="btn-icon" onClick={() => setIsDark(!isDark)}>
-                {isDark ? <Sun size={20} /> : <Moon size={20} />}
+            <div className="flex-between" style={{ gap: '1.5rem' }}>
+              <button className="btn-icon" onClick={() => setIsDark(!isDark)} style={{ width: '50px', height: '50px' }}>
+                {isDark ? <Sun size={24} /> : <Moon size={24} />}
               </button>
-              <div className="user-profile" style={{ width: '40px', height: '40px', borderRadius: '50%', backgroundColor: 'var(--primary-color)', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 'bold' }}>
+              <div className="user-profile" style={{ width: '50px', height: '50px', borderRadius: 'var(--radius-md)', backgroundColor: 'var(--primary-color)', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 'bold', fontSize: '1.25rem', boxShadow: 'var(--shadow-md)' }}>
                 م
               </div>
             </div>

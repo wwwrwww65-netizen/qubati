@@ -36,10 +36,13 @@ const Users = () => {
 
   return (
     <div>
-      <div className="flex-between mb-6">
-        <h1 style={{ fontSize: '1.5rem', fontWeight: 'bold' }}>إدارة المستخدمين والصلاحيات</h1>
-        <button className="btn btn-primary" onClick={() => setShowModal(true)}>
-          <Plus size={18} /> إضافة مستخدم جديد
+      <div className="flex-between mb-8">
+        <div>
+          <h1 style={{ fontSize: '2.5rem', fontWeight: '900', color: 'var(--text-primary)' }}>إدارة المستخدمين</h1>
+          <p style={{ color: 'var(--text-secondary)', fontSize: '1.1rem' }}>التحكم في صلاحيات الوصول وحسابات الموظفين</p>
+        </div>
+        <button className="btn btn-primary" onClick={() => setShowModal(true)} style={{ padding: '1rem 2rem', fontSize: '1.1rem' }}>
+          <Plus size={24} /> إضافة مستخدم جديد
         </button>
       </div>
 
@@ -85,45 +88,21 @@ const Users = () => {
       </div>
 
       {showModal && createPortal(
-        <div 
-          style={{
-            position: 'fixed',
-            top: 0, left: 0, right: 0, bottom: 0,
-            backgroundColor: 'rgba(0,0,0,0.8)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            zIndex: 999999
-          }}
-        >
-          <div 
-            style={{
-              backgroundColor: 'var(--bg-secondary, #1e293b)',
-              color: 'var(--text-primary, #ffffff)',
-              borderRadius: '8px',
-              width: '90%',
-              maxWidth: '500px',
-              maxHeight: '90vh',
-              display: 'flex',
-              flexDirection: 'column',
-              boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1)',
-              border: '1px solid var(--border-color, #334155)',
-              overflow: 'hidden'
-            }}
-          >
-            <div style={{ padding: '1.5rem', borderBottom: '1px solid var(--border-color, #334155)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <h2 style={{ fontSize: '1.25rem', margin: 0 }}>مستخدم جديد</h2>
-              <button type="button" onClick={() => setShowModal(false)} style={{ background: 'transparent', border: 'none', color: 'inherit', cursor: 'pointer' }}><X size={20} /></button>
+        <div className="modal-overlay" onClick={() => setShowModal(false)}>
+          <div className="modal" onClick={e => e.stopPropagation()}>
+            <div className="modal-header">
+              <h2>مستخدم جديد</h2>
+              <button className="btn-icon" onClick={() => setShowModal(false)}><X size={24} /></button>
             </div>
             
-            <div style={{ padding: '1.5rem', overflowY: 'auto' }}>
+            <div className="modal-body">
               <form onSubmit={handleSubmit}>
-                <div className="form-group mb-4">
+                <div className="form-group">
                   <label className="form-label">الاسم الكامل</label>
                   <input type="text" className="form-control" placeholder="اسم الموظف..." required 
                     value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})} />
                 </div>
-                <div className="grid-2 mb-4">
+                <div className="grid-2">
                   <div className="form-group">
                     <label className="form-label">رقم الهاتف / البريد</label>
                     <input type="text" className="form-control" required
@@ -135,7 +114,7 @@ const Users = () => {
                       value={formData.password} onChange={e => setFormData({...formData, password: e.target.value})} />
                   </div>
                 </div>
-                <div className="form-group mb-4">
+                <div className="form-group">
                   <label className="form-label">الصلاحية (الدور)</label>
                   <select className="form-control" value={formData.role} onChange={e => setFormData({...formData, role: e.target.value})}>
                     <option>مدير النظام (Admin)</option>
@@ -144,17 +123,17 @@ const Users = () => {
                     <option>موظف الحجوزات/الشحن</option>
                   </select>
                 </div>
-                <div className="form-group mb-4">
-                  <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', cursor: 'pointer', fontWeight: '500' }}>
+                <div className="form-group">
+                  <label style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', cursor: 'pointer', fontWeight: '600' }}>
                     <input type="checkbox" checked={formData.status === 'نشط'} 
                       onChange={e => setFormData({...formData, status: e.target.checked ? 'نشط' : 'موقوف'})} 
-                      style={{ width: '18px', height: '18px' }} />
+                      style={{ width: '20px', height: '20px' }} />
                     الحساب نشط
                   </label>
                 </div>
-                <div style={{ marginTop: '2rem', display: 'flex', justifyContent: 'flex-end', gap: '1rem' }}>
-                  <button type="button" className="btn" onClick={() => setShowModal(false)} style={{ border: '1px solid var(--border-color)', backgroundColor: 'transparent', color: 'inherit' }}>إلغاء</button>
-                  <button type="submit" className="btn btn-primary" style={{ backgroundColor: '#3b82f6', color: 'white' }}>حفظ المستخدم</button>
+                <div className="modal-footer">
+                  <button type="button" className="btn" onClick={() => setShowModal(false)} style={{ border: '1px solid var(--border-color)' }}>إلغاء</button>
+                  <button type="submit" className="btn btn-primary">حفظ المستخدم</button>
                 </div>
               </form>
             </div>

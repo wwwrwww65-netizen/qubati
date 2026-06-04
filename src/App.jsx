@@ -1,5 +1,5 @@
-import React from 'react';
-import { HashRouter as Router, Routes, Route } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { HashRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import Layout from './components/Layout';
 import Dashboard from './pages/Dashboard';
 import Wallet from './pages/Wallet';
@@ -9,9 +9,23 @@ import Trips from './pages/Trips';
 import Users from './pages/Users';
 import Login from './pages/Login';
 
+function ScrollToTop() {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    const contentArea = document.querySelector('.content-area');
+    if (contentArea) {
+      contentArea.scrollTo(0, 0);
+    }
+  }, [pathname]);
+
+  return null;
+}
+
 function App() {
   return (
     <Router>
+      <ScrollToTop />
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/" element={<Layout />}>

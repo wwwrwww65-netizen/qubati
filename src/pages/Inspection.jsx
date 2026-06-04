@@ -76,20 +76,28 @@ const Inspection = () => {
 
   return (
     <div>
-      <div className="flex-between mb-6">
-        <h1 style={{ fontSize: '1.5rem', fontWeight: 'bold' }}>الفحص الإلكتروني الدوري</h1>
-        <button className="btn btn-primary" onClick={() => setShowModal(true)}>
-          <Plus size={18} /> تسجيل فحص جديد
+      <div className="flex-between mb-8">
+        <div>
+          <h1 style={{ fontSize: '2.5rem', fontWeight: '900', color: 'var(--text-primary)' }}>الفحص الإلكتروني الدوري</h1>
+          <p style={{ color: 'var(--text-secondary)', fontSize: '1.1rem' }}>متابعة حالة فحص المركبات وصلاحيتها</p>
+        </div>
+        <button className="btn btn-primary" onClick={() => setShowModal(true)} style={{ padding: '1rem 2rem', fontSize: '1.1rem' }}>
+          <Plus size={24} /> تسجيل فحص جديد
         </button>
       </div>
 
-      <div className="card mb-6" style={{ borderColor: 'var(--warning-color)' }}>
+      <div className="card mb-8" style={{ borderRight: '6px solid var(--warning-color)', background: 'var(--warning-soft)' }}>
         <div className="flex-between">
-          <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', color: 'var(--warning-color)' }}>
-            <Bell size={24} />
-            <h3 style={{ margin: 0 }}>تنبيهات الفحص الدوري</h3>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem', color: 'var(--warning-color)' }}>
+            <div style={{ backgroundColor: 'white', padding: '0.75rem', borderRadius: 'var(--radius-md)', display: 'flex' }}>
+              <Bell size={32} />
+            </div>
+            <div>
+              <h3 style={{ margin: 0, fontSize: '1.25rem', fontWeight: '800' }}>تنبيهات الفحص الدوري</h3>
+              <p style={{ color: 'var(--text-secondary)', fontSize: '1rem' }}>هناك مركبات تحتاج لتجديد الفحص قريباً</p>
+            </div>
           </div>
-          <span style={{ backgroundColor: 'var(--warning-color)', color: 'white', padding: '0.25rem 0.5rem', borderRadius: 'var(--radius-full)', fontSize: '0.875rem' }}>
+          <span style={{ backgroundColor: 'var(--warning-color)', color: 'white', padding: '0.5rem 1.5rem', borderRadius: 'var(--radius-full)', fontSize: '1.1rem', fontWeight: '700' }}>
             {expiringCount} مركبات اقترب موعدها
           </span>
         </div>
@@ -140,40 +148,16 @@ const Inspection = () => {
       </div>
 
       {showModal && createPortal(
-        <div 
-          style={{
-            position: 'fixed',
-            top: 0, left: 0, right: 0, bottom: 0,
-            backgroundColor: 'rgba(0,0,0,0.8)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            zIndex: 999999
-          }}
-        >
-          <div 
-            style={{
-              backgroundColor: 'var(--bg-secondary, #1e293b)',
-              color: 'var(--text-primary, #ffffff)',
-              borderRadius: '8px',
-              width: '90%',
-              maxWidth: '500px',
-              maxHeight: '90vh',
-              display: 'flex',
-              flexDirection: 'column',
-              boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1)',
-              border: '1px solid var(--border-color, #334155)',
-              overflow: 'hidden'
-            }}
-          >
-            <div style={{ padding: '1.5rem', borderBottom: '1px solid var(--border-color, #334155)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <h2 style={{ fontSize: '1.25rem', margin: 0 }}>تسجيل فحص جديد</h2>
-              <button type="button" onClick={() => setShowModal(false)} style={{ background: 'transparent', border: 'none', color: 'inherit', cursor: 'pointer' }}><X size={20} /></button>
+        <div className="modal-overlay" onClick={() => setShowModal(false)}>
+          <div className="modal" onClick={e => e.stopPropagation()}>
+            <div className="modal-header">
+              <h2>تسجيل فحص جديد</h2>
+              <button className="btn-icon" onClick={() => setShowModal(false)}><X size={24} /></button>
             </div>
             
-            <div style={{ padding: '1.5rem', overflowY: 'auto' }}>
+            <div className="modal-body">
               <form onSubmit={handleSubmit}>
-                <div className="grid-2 mb-4">
+                <div className="grid-2">
                   <div className="form-group">
                     <label className="form-label">اسم الفاحص</label>
                     <select className="form-control" value={formData.examiner} onChange={e => setFormData({...formData, examiner: e.target.value})}>
@@ -186,7 +170,7 @@ const Inspection = () => {
                     <input type="text" className="form-control" required value={formData.pointNo} onChange={e => setFormData({...formData, pointNo: e.target.value})} />
                   </div>
                 </div>
-                <div className="grid-2 mb-4">
+                <div className="grid-2">
                   <div className="form-group">
                     <label className="form-label">نوع الفحص</label>
                     <input type="text" className="form-control" placeholder="فحص دوري، فحص شامل..." required value={formData.type} onChange={e => setFormData({...formData, type: e.target.value})} />
@@ -196,7 +180,7 @@ const Inspection = () => {
                     <input type="text" className="form-control" required value={formData.customer} onChange={e => setFormData({...formData, customer: e.target.value})} />
                   </div>
                 </div>
-                <div className="grid-2 mb-4">
+                <div className="grid-2">
                   <div className="form-group">
                     <label className="form-label">رقم الهاتف</label>
                     <input type="text" className="form-control" required value={formData.phone} onChange={e => setFormData({...formData, phone: e.target.value})} />
@@ -206,7 +190,7 @@ const Inspection = () => {
                     <input type="text" className="form-control" required value={formData.plate} onChange={e => setFormData({...formData, plate: e.target.value})} />
                   </div>
                 </div>
-                <div className="grid-2 mb-4">
+                <div className="grid-2">
                   <div className="form-group">
                     <label className="form-label">تاريخ بدء الفحص</label>
                     <input type="date" className="form-control" required value={formData.startDate} onChange={e => setFormData({...formData, startDate: e.target.value})} />
@@ -216,7 +200,7 @@ const Inspection = () => {
                     <input type="date" className="form-control" required value={formData.endDate} onChange={e => setFormData({...formData, endDate: e.target.value})} />
                   </div>
                 </div>
-                <div className="grid-2 mb-4">
+                <div className="grid-2">
                   <div className="form-group">
                     <label className="form-label">المبلغ</label>
                     <input type="number" className="form-control" required value={formData.amount} onChange={e => setFormData({...formData, amount: e.target.value})} />
@@ -229,9 +213,9 @@ const Inspection = () => {
                     </select>
                   </div>
                 </div>
-                <div style={{ marginTop: '2rem', display: 'flex', justifyContent: 'flex-end', gap: '1rem' }}>
-                  <button type="button" className="btn" onClick={() => setShowModal(false)} style={{ border: '1px solid var(--border-color)', backgroundColor: 'transparent', color: 'inherit' }}>إلغاء</button>
-                  <button type="submit" className="btn btn-primary" style={{ backgroundColor: '#3b82f6', color: 'white' }}>حفظ وترحيل</button>
+                <div className="modal-footer">
+                  <button type="button" className="btn" onClick={() => setShowModal(false)} style={{ border: '1px solid var(--border-color)' }}>إلغاء</button>
+                  <button type="submit" className="btn btn-primary">حفظ وترحيل</button>
                 </div>
               </form>
             </div>
