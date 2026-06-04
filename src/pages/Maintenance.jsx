@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { createPortal } from 'react-dom';
-import { Plus, Search, FileText, X, Trash2 } from 'lucide-react';
+import { Plus, Search, FileText, X, Trash2, Download } from 'lucide-react';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { db } from '../db';
 

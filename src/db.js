@@ -9,7 +9,16 @@ db.version(1).stores({
   maintenance: '++id, engineer, pointNo, customer, phone, type, amount, paymentMethod, date',
   inspections: '++id, examiner, pointNo, type, customer, phone, plate, amount, paymentMethod, startDate, endDate, status',
   tripSettings: '++id, route, price',
-  bookings: '++id, ticketNo, passenger, phone, routeId, tickets, delivery, amount, paymentMethod, date'
+  bookings: '++id, ticketNo, passenger, phone, routeId, tickets, delivery, amount, paymentMethod, date',
+
+  // New tables for Platform Completion
+  engineers: '++id, name, phone, specialty, status',
+  vehicles: '++id, plate, type, model, owner, status',
+  stations: '++id, name, location, contact, status',
+  shipping: '++id, receiptNo, senderName, senderPhone, receiverName, receiverPhone, itemType, quantity, amount, immediateDelivery, status, date',
+  billPayments: '++id, serviceType, accountNo, amount, commission, total, user, date',
+  fuelLogs: '++id, busId, stationId, date, quantity, fuelType, paymentType, amount, user',
+  auditLogs: '++id, user, action, module, recordId, timestamp, details'
 });
 
 export const initDbMockData = async () => {
@@ -19,7 +28,32 @@ export const initDbMockData = async () => {
     await db.users.bulkAdd([
       { name: 'أحمد المدير', phone: 'admin@qabati.com', role: 'مدير النظام (Admin)', status: 'نشط' },
       { name: 'خالد المحاسب', phone: '771122334', role: 'كاشير/محاسب', status: 'نشط' },
-      { name: 'وليد المهندس', phone: '779988776', role: 'مهندس/فاحص', status: 'موقوف' }
+      { name: 'وليد المهندس', phone: '779988776', role: 'مهندس/فاحص', status: 'نشط' }
+    ]);
+  }
+
+  const engineersCount = await db.engineers.count();
+  if (engineersCount === 0) {
+    await db.engineers.bulkAdd([
+      { name: 'وليد علي', phone: '770000001', specialty: 'ميكانيك', status: 'نشط' },
+      { name: 'خالد محمد', phone: '770000002', specialty: 'كهرباء', status: 'نشط' },
+      { name: 'عبدالله حسن', phone: '770000003', specialty: 'فحص فني', status: 'نشط' }
+    ]);
+  }
+
+  const vehiclesCount = await db.vehicles.count();
+  if (vehiclesCount === 0) {
+    await db.vehicles.bulkAdd([
+      { plate: '1/12345', type: 'باص همر', model: '2022', owner: 'شركة القباطي', status: 'نشط' },
+      { plate: '2/54321', type: 'باص هايس', model: '2021', owner: 'أحمد علي', status: 'نشط' }
+    ]);
+  }
+
+  const stationsCount = await db.stations.count();
+  if (stationsCount === 0) {
+    await db.stations.bulkAdd([
+      { name: 'محطة القباطي - صنعاء', location: 'صنعاء - الجراف', contact: '01234567', status: 'نشط' },
+      { name: 'محطة القباطي - تعز', location: 'تعز - الحوبان', contact: '04765432', status: 'نشط' }
     ]);
   }
 
@@ -35,8 +69,7 @@ export const initDbMockData = async () => {
   const transactionsCount = await db.transactions.count();
   if (transactionsCount === 0) {
     await db.transactions.bulkAdd([
-      { receiptNo: '#REC-001', type: 'تسديد فاتورة', credit: 0, debit: 10000, balance: 490000, point: 'جوالي', user: 'أحمد', date: new Date().toISOString(), customer: 'محمد', phone: '777' },
-      { receiptNo: '#REC-002', type: 'شحن محفظة', credit: 50000, debit: 0, balance: 540000, point: 'ون كاش', user: 'أحمد', date: new Date().toISOString(), customer: 'سالم', phone: '777' }
+      { receiptNo: '#REC-001', type: 'إيداع رصيد', credit: 1000000, debit: 0, balance: 1000000, point: 'نقد - الصندوق', user: 'أحمد المدير', date: new Date().toISOString(), customer: 'نظامي', phone: '000' }
     ]);
   }
 };

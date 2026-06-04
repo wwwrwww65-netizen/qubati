@@ -48,12 +48,12 @@ const Wallet = () => {
     }
   };
 
-  const totalBalance = transactions?.length ? transactions[transactions.length - 1].balance : 0;
+  const totalBalance = transactions?.length ? (transactions[transactions.length - 1]?.balance || 0) : 0;
   const totalCommissions = 25000; // static for now
   const totalDebts = 150000; // static for now
 
   return (
-    <div>
+    <div className="fade-in">
       <div className="flex-between mb-8">
         <div>
           <h1 style={{ fontSize: '2.5rem', fontWeight: '900', color: 'var(--text-primary)' }}>المحفظة المالية</h1>
