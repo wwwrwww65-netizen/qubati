@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { createPortal } from 'react-dom';
-import { Plus, Download, Printer, X, Trash2, Edit } from 'lucide-react';
+import { Plus, Download, Printer, X, Trash2, Edit, Wallet as WalletIcon } from 'lucide-react';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { db } from '../db';
 
@@ -85,7 +85,7 @@ const Wallet = () => {
           </div>
         </div>
         <div className="stat-card">
-          <div className="stat-icon"><Wallet size={32} /></div>
+          <div className="stat-icon"><WalletIcon size={32} /></div>
           <div className="stat-content">
             <h3>السيولة النقدية</h3>
             <p>{(totalBalance - totalDebts).toLocaleString()} ريال</p>
