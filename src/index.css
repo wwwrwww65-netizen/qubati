@@ -493,23 +493,28 @@ h3 { font-size: 1.25rem; font-weight: 700; }
 
 .ticker-text {
   display: inline-block;
-  padding-left: 100%;
-  animation: marquee 30s linear infinite;
+  white-space: nowrap;
+  animation: ticker-animation 25s linear infinite;
   font-weight: 800;
   color: var(--primary-color);
-  font-size: 1.1rem;
+  font-size: 1.2rem;
+  will-change: transform;
 }
 
-@keyframes marquee {
-  0% { transform: translate(0, 0); }
-  100% { transform: translate(100%, 0); }
+@keyframes ticker-animation {
+  0% { transform: translateX(100%); }
+  100% { transform: translateX(-100%); }
 }
 
-[dir="rtl"] .ticker-text {
-  animation: marquee-rtl 30s linear infinite;
+.ticker-wrapper:hover .ticker-text {
+  animation-play-state: paused;
 }
 
-@keyframes marquee-rtl {
-  0% { transform: translate(100%, 0); }
-  100% { transform: translate(-100%, 0); }
+/* Ensure forms don't stretch too wide on desktop */
+.form-group {
+  max-width: 600px;
+}
+
+.modal .form-group, .grid-2 .form-group, .grid-3 .form-group, .grid-4 .form-group {
+  max-width: 100%;
 }
