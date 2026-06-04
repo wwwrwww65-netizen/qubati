@@ -93,11 +93,11 @@ const Trips = () => {
           <p style={{ color: 'var(--text-secondary)', fontSize: '1.1rem' }}>إدارة خطوط السير وحجوزات الركاب</p>
         </div>
         <div style={{ display: 'flex', gap: '1.5rem' }}>
-          <button className="btn btn-icon" onClick={() => setShowSettingsModal(true)} title="إعدادات الخطوط">
-            <Settings size={24} />
+          <button className="btn btn-secondary" onClick={() => setShowSettingsModal(true)} title="إعدادات الخطوط">
+            <Settings size={24} /> <span>إعدادات الخطوط</span>
           </button>
-          <button className="btn btn-primary" onClick={() => setShowBookingModal(true)} style={{ padding: '1rem 2rem', fontSize: '1.1rem' }}>
-            <Plus size={24} /> حجز تذكرة
+          <button className="btn btn-primary" onClick={() => setShowBookingModal(true)}>
+            <Plus size={24} /> <span>حجز تذكرة جديدة</span>
           </button>
         </div>
       </div>

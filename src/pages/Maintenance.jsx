@@ -73,7 +73,7 @@ const Maintenance = () => {
           <h1 style={{ fontSize: '2.5rem', fontWeight: '900', color: 'var(--text-primary)' }}>ورشة الصيانة</h1>
           <p style={{ color: 'var(--text-secondary)', fontSize: '1.1rem' }}>إدارة عمليات الإصلاح والصيانة الدورية</p>
         </div>
-        <button className="btn btn-primary" onClick={() => setShowModal(true)} style={{ padding: '1rem 2rem', fontSize: '1.1rem' }}>
+        <button className="btn btn-primary" onClick={() => setShowModal(true)}>
           <Plus size={24} /> تسجيل عملية صيانة
         </button>
       </div>
@@ -198,7 +198,12 @@ const Maintenance = () => {
                 </div>
                 <div className="form-group">
                   <label className="form-label">مرفقات (صورة القطع/المركبة)</label>
-                  <input type="file" className="form-control" accept="image/*" />
+                  <div className="file-upload-wrapper">
+                    <Download className="file-upload-icon" size={48} />
+                    <span className="file-upload-text">اسحب وأفلت الصور هنا أو انقر للاختيار</span>
+                    <span className="file-upload-hint">يمكنك رفع صور القطع أو حالة المركبة</span>
+                    <input type="file" accept="image/*" multiple />
+                  </div>
                 </div>
                 <div className="modal-footer">
                   <button type="button" className="btn" onClick={() => setShowModal(false)} style={{ border: '1px solid var(--border-color)' }}>إلغاء</button>

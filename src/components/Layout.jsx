@@ -15,7 +15,13 @@ import {
 
 const Layout = () => {
   const [isDark, setIsDark] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const location = useLocation();
+
+  // Close sidebar when route changes on mobile
+  useEffect(() => {
+    setIsSidebarOpen(false);
+  }, [location.pathname]);
 
   useEffect(() => {
     if (isDark) {
@@ -36,8 +42,11 @@ const Layout = () => {
 
   return (
     <div className="app-container">
+      {/* Sidebar Overlay for Mobile */}
+      {isSidebarOpen && <div className="sidebar-overlay" onClick={() => setIsSidebarOpen(false)} />}
+
       {/* Sidebar */}
-      <aside className="sidebar">
+      <aside className={`sidebar ${isSidebarOpen ? 'open' : ''}`}>
         <div className="sidebar-header">
           <span>القباطي</span>
           <span style={{ color: 'var(--text-primary)', opacity: 0.5, marginRight: '5px' }}>ERP</span>
@@ -67,7 +76,7 @@ const Layout = () => {
         <header className="header">
           <div className="flex-between" style={{ width: '100%' }}>
             <div className="flex-between" style={{ gap: '1.5rem' }}>
-              <button className="btn-icon">
+              <button className="btn-icon" onClick={() => setIsSidebarOpen(!isSidebarOpen)}>
                 <Menu size={28} />
               </button>
               <h2 style={{ fontSize: '1.5rem', fontWeight: '800' }}>مرحباً بك، مدير النظام 👋</h2>

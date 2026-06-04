@@ -60,11 +60,11 @@ const Wallet = () => {
           <p style={{ color: 'var(--text-secondary)', fontSize: '1.1rem' }}>إدارة الحسابات، الديون، والعمليات المالية</p>
         </div>
         <div style={{ display: 'flex', gap: '1.5rem' }}>
-          <button className="btn btn-icon" title="تصدير">
-            <Download size={24} />
+          <button className="btn btn-secondary" title="تصدير">
+            <Download size={24} /> <span>تصدير البيانات</span>
           </button>
-          <button className="btn btn-primary" onClick={() => setShowModal(true)} style={{ padding: '1rem 2rem', fontSize: '1.1rem' }}>
-            <Plus size={24} /> إضافة عملية جديدة
+          <button className="btn btn-primary" onClick={() => setShowModal(true)}>
+            <Plus size={24} /> <span>إضافة عملية جديدة</span>
           </button>
         </div>
       </div>
@@ -188,7 +188,12 @@ const Wallet = () => {
                 </div>
                 <div className="form-group">
                   <label className="form-label">المرفقات (صورة الحوالة)</label>
-                  <input type="file" className="form-control" accept="image/*" />
+                  <div className="file-upload-wrapper">
+                    <Download className="file-upload-icon" size={48} />
+                    <span className="file-upload-text">اسحب وأفلت الصورة هنا أو انقر للاختيار</span>
+                    <span className="file-upload-hint">يدعم PNG, JPG, JPEG (الحد الأقصى 5MB)</span>
+                    <input type="file" accept="image/*" />
+                  </div>
                 </div>
                 <div className="modal-footer">
                   <button type="button" className="btn" onClick={() => setShowModal(false)} style={{ border: '1px solid var(--border-color)' }}>إلغاء</button>

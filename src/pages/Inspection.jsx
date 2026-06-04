@@ -81,7 +81,7 @@ const Inspection = () => {
           <h1 style={{ fontSize: '2.5rem', fontWeight: '900', color: 'var(--text-primary)' }}>الفحص الإلكتروني الدوري</h1>
           <p style={{ color: 'var(--text-secondary)', fontSize: '1.1rem' }}>متابعة حالة فحص المركبات وصلاحيتها</p>
         </div>
-        <button className="btn btn-primary" onClick={() => setShowModal(true)} style={{ padding: '1rem 2rem', fontSize: '1.1rem' }}>
+        <button className="btn btn-primary" onClick={() => setShowModal(true)}>
           <Plus size={24} /> تسجيل فحص جديد
         </button>
       </div>

@@ -19,7 +19,7 @@ const Dashboard = () => {
           <h1 style={{ fontSize: '2.5rem', fontWeight: '900', color: 'var(--text-primary)' }}>لوحة القيادة</h1>
           <p style={{ color: 'var(--text-secondary)', fontSize: '1.1rem' }}>نظرة عامة على أداء النظام والعمليات الحالية</p>
         </div>
-        <button className="btn btn-primary" style={{ padding: '1rem 2rem', fontSize: '1.1rem' }}>
+        <button className="btn btn-primary">
           تصدير تقرير PDF
         </button>
       </div>

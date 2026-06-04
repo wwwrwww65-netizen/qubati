@@ -41,7 +41,7 @@ const Users = () => {
           <h1 style={{ fontSize: '2.5rem', fontWeight: '900', color: 'var(--text-primary)' }}>إدارة المستخدمين</h1>
           <p style={{ color: 'var(--text-secondary)', fontSize: '1.1rem' }}>التحكم في صلاحيات الوصول وحسابات الموظفين</p>
         </div>
-        <button className="btn btn-primary" onClick={() => setShowModal(true)} style={{ padding: '1rem 2rem', fontSize: '1.1rem' }}>
+        <button className="btn btn-primary" onClick={() => setShowModal(true)}>
           <Plus size={24} /> إضافة مستخدم جديد
         </button>
       </div>
