@@ -14,6 +14,12 @@ const Dashboard = () => {
 
   return (
     <div className="fade-in">
+      <div className="ticker-wrapper">
+        <div className="ticker-text">
+          الشوافي لخدمات النقل والسفريات والتسويق والسياحي اينما تكون نحن معك .. صنعاء - القبيطة - الراهدة - تعز - الاحكوم - حيفان الاعبوس -الاعروق الاغبرة - عدن - الحديدة
+        </div>
+      </div>
+
       <div className="flex justify-between items-center mb-8">
         <div>
           <h1 className="text-4xl font-black">لوحة القيادة</h1>
