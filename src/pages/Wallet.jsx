@@ -54,38 +54,45 @@ const Wallet = () => {
 
   return (
     <div>
-      <div className="flex-between mb-6">
-        <h1 style={{ fontSize: '1.5rem', fontWeight: 'bold' }}>المحفظة المالية</h1>
-        <div style={{ display: 'flex', gap: '1rem' }}>
-          <button className="btn" style={{ backgroundColor: 'var(--bg-secondary)', border: '1px solid var(--border-color)' }}>
-            <Download size={18} /> تصدير
+      <div className="flex-between mb-8">
+        <div>
+          <h1 style={{ fontSize: '2.5rem', fontWeight: '900', color: 'var(--text-primary)' }}>المحفظة المالية</h1>
+          <p style={{ color: 'var(--text-secondary)', fontSize: '1.1rem' }}>إدارة الحسابات، الديون، والعمليات المالية</p>
+        </div>
+        <div style={{ display: 'flex', gap: '1.5rem' }}>
+          <button className="btn btn-secondary" title="تصدير">
+            <Download size={24} /> <span>تصدير البيانات</span>
           </button>
           <button className="btn btn-primary" onClick={() => setShowModal(true)}>
-            <Plus size={18} /> إضافة عملية جديدة
+            <Plus size={24} /> <span>إضافة عملية جديدة</span>
           </button>
         </div>
       </div>
 
-      <div className="grid-4 mb-6">
-        <div className="stat-card">
+      <div className="grid-4 mb-8">
+        <div className="stat-card" style={{ '--primary-color': 'var(--success-color)', '--primary-soft': 'var(--success-soft)' }}>
+          <div className="stat-icon"><Plus size={32} /></div>
           <div className="stat-content">
             <h3>الرصيد الإجمالي</h3>
             <p className="text-success">{totalBalance.toLocaleString()} ريال</p>
           </div>
         </div>
-        <div className="stat-card">
+        <div className="stat-card" style={{ '--primary-color': 'var(--danger-color)', '--primary-soft': 'var(--danger-soft)' }}>
+          <div className="stat-icon"><Trash2 size={32} /></div>
           <div className="stat-content">
             <h3>إجمالي الديون</h3>
             <p className="text-danger">{totalDebts.toLocaleString()} ريال</p>
           </div>
         </div>
         <div className="stat-card">
+          <div className="stat-icon"><Wallet size={32} /></div>
           <div className="stat-content">
             <h3>السيولة النقدية</h3>
             <p>{(totalBalance - totalDebts).toLocaleString()} ريال</p>
           </div>
         </div>
-        <div className="stat-card">
+        <div className="stat-card" style={{ '--primary-color': 'var(--warning-color)', '--primary-soft': 'var(--warning-soft)' }}>
+          <div className="stat-icon"><Plus size={32} /></div>
           <div className="stat-content">
             <h3>إجمالي العمولات</h3>
             <p className="text-success">{totalCommissions.toLocaleString()} ريال</p>
@@ -94,9 +101,9 @@ const Wallet = () => {
       </div>
 
       <div className="card">
-        <div className="flex-between mb-4">
-          <h3>سجل العمليات المالي</h3>
-          <button className="btn btn-primary" style={{ padding: '0.25rem 0.75rem', fontSize: '0.875rem' }}>سحب العمولة</button>
+        <div className="flex-between mb-6">
+          <h3 style={{ fontSize: '1.5rem', fontWeight: '700' }}>سجل العمليات المالي</h3>
+          <button className="btn btn-primary" style={{ padding: '0.5rem 1.5rem', fontSize: '1rem', background: 'var(--success-color)' }}>سحب العمولة</button>
         </div>
         <div className="table-wrapper">
           <table className="table">
@@ -137,41 +144,17 @@ const Wallet = () => {
       </div>
 
       {showModal && createPortal(
-        <div 
-          style={{
-            position: 'fixed',
-            top: 0, left: 0, right: 0, bottom: 0,
-            backgroundColor: 'rgba(0,0,0,0.8)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            zIndex: 999999
-          }}
-        >
-          <div 
-            style={{
-              backgroundColor: 'var(--bg-secondary, #1e293b)',
-              color: 'var(--text-primary, #ffffff)',
-              borderRadius: '8px',
-              width: '90%',
-              maxWidth: '500px',
-              maxHeight: '90vh',
-              display: 'flex',
-              flexDirection: 'column',
-              boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1)',
-              border: '1px solid var(--border-color, #334155)',
-              overflow: 'hidden'
-            }}
-          >
-            <div style={{ padding: '1.5rem', borderBottom: '1px solid var(--border-color, #334155)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <h2 style={{ fontSize: '1.25rem', margin: 0 }}>عملية مالية جديدة (نقطة دفع)</h2>
-              <button type="button" onClick={() => setShowModal(false)} style={{ background: 'transparent', border: 'none', color: 'inherit', cursor: 'pointer' }}><X size={20} /></button>
+        <div className="modal-overlay" onClick={() => setShowModal(false)}>
+          <div className="modal" onClick={e => e.stopPropagation()}>
+            <div className="modal-header">
+              <h2>عملية مالية جديدة (نقطة دفع)</h2>
+              <button className="btn-icon" onClick={() => setShowModal(false)}><X size={24} /></button>
             </div>
             
-            <div style={{ padding: '1.5rem', overflowY: 'auto' }}>
+            <div className="modal-body">
               <form onSubmit={handleSubmit}>
                 <div className="grid-2">
-                  <div className="form-group mb-4">
+                  <div className="form-group">
                     <label className="form-label">ربط حساب (نوع المحفظة)</label>
                     <select className="form-control" value={formData.point} onChange={e => setFormData({...formData, point: e.target.value})}>
                       <option>جوالي</option>
@@ -180,16 +163,16 @@ const Wallet = () => {
                       <option>نقد - الصندوق</option>
                     </select>
                   </div>
-                  <div className="form-group mb-4">
+                  <div className="form-group">
                     <label className="form-label">رقم النقطة</label>
                     <input type="text" className="form-control" placeholder="أدخل رقم النقطة..." required value={formData.pointNo} onChange={e => setFormData({...formData, pointNo: e.target.value})} />
                   </div>
                 </div>
-                <div className="form-group mb-4">
+                <div className="form-group">
                   <label className="form-label">العميل</label>
                   <input type="text" className="form-control" placeholder="اسم العميل..." required value={formData.customer} onChange={e => setFormData({...formData, customer: e.target.value})} />
                 </div>
-                <div className="grid-2 mb-4">
+                <div className="grid-2">
                   <div className="form-group">
                     <label className="form-label">المبلغ</label>
                     <input type="number" className="form-control" placeholder="0.00" required value={formData.amount} onChange={e => setFormData({...formData, amount: e.target.value})} />
@@ -199,17 +182,22 @@ const Wallet = () => {
                     <input type="text" className="form-control" placeholder="77XXXXXXX" required value={formData.phone} onChange={e => setFormData({...formData, phone: e.target.value})} />
                   </div>
                 </div>
-                <div className="form-group mb-4">
+                <div className="form-group">
                   <label className="form-label">التاريخ</label>
                   <input type="date" className="form-control" required value={formData.date} onChange={e => setFormData({...formData, date: e.target.value})} />
                 </div>
-                <div className="form-group mb-4">
+                <div className="form-group">
                   <label className="form-label">المرفقات (صورة الحوالة)</label>
-                  <input type="file" className="form-control" accept="image/*" />
+                  <div className="file-upload-wrapper">
+                    <Download className="file-upload-icon" size={48} />
+                    <span className="file-upload-text">اسحب وأفلت الصورة هنا أو انقر للاختيار</span>
+                    <span className="file-upload-hint">يدعم PNG, JPG, JPEG (الحد الأقصى 5MB)</span>
+                    <input type="file" accept="image/*" />
+                  </div>
                 </div>
-                <div style={{ marginTop: '2rem', display: 'flex', justifyContent: 'flex-end', gap: '1rem' }}>
-                  <button type="button" className="btn" onClick={() => setShowModal(false)} style={{ border: '1px solid var(--border-color)', backgroundColor: 'transparent', color: 'inherit' }}>إلغاء</button>
-                  <button type="submit" className="btn btn-primary" style={{ backgroundColor: '#3b82f6', color: 'white' }}>حفظ العملية</button>
+                <div className="modal-footer">
+                  <button type="button" className="btn" onClick={() => setShowModal(false)} style={{ border: '1px solid var(--border-color)' }}>إلغاء</button>
+                  <button type="submit" className="btn btn-primary">حفظ العملية</button>
                 </div>
               </form>
             </div>

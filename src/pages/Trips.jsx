@@ -87,39 +87,47 @@ const Trips = () => {
 
   return (
     <div>
-      <div className="flex-between mb-6">
-        <h1 style={{ fontSize: '1.5rem', fontWeight: 'bold' }}>حجز الرحلات (النقل)</h1>
-        <div style={{ display: 'flex', gap: '1rem' }}>
-          <button className="btn" style={{ backgroundColor: 'var(--bg-secondary)', border: '1px solid var(--border-color)' }} onClick={() => setShowSettingsModal(true)}>
-            <Settings size={18} /> إعدادات الخطوط
+      <div className="flex-between mb-8">
+        <div>
+          <h1 style={{ fontSize: '2.5rem', fontWeight: '900', color: 'var(--text-primary)' }}>حجز الرحلات (النقل)</h1>
+          <p style={{ color: 'var(--text-secondary)', fontSize: '1.1rem' }}>إدارة خطوط السير وحجوزات الركاب</p>
+        </div>
+        <div style={{ display: 'flex', gap: '1.5rem' }}>
+          <button className="btn btn-secondary" onClick={() => setShowSettingsModal(true)} title="إعدادات الخطوط">
+            <Settings size={24} /> <span>إعدادات الخطوط</span>
           </button>
           <button className="btn btn-primary" onClick={() => setShowBookingModal(true)}>
-            <Plus size={18} /> حجز تذكرة
+            <Plus size={24} /> <span>حجز تذكرة جديدة</span>
           </button>
         </div>
       </div>
 
-      <div className="grid-2 mb-6">
-        <div className="card" style={{ marginBottom: 0 }}>
-          <h3 className="mb-4">خطوط السير النشطة</h3>
-          <ul style={{ listStyle: 'none' }}>
+      <div className="grid-2 mb-8">
+        <div className="card" style={{ margin: 0 }}>
+          <h3 className="mb-6" style={{ fontSize: '1.5rem', fontWeight: '700' }}>خطوط السير النشطة</h3>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
             {tripSettings.map(route => (
-              <li key={route.id} className="flex-between" style={{ padding: '0.75rem 0', borderBottom: '1px solid var(--border-color)' }}>
-                <span>{route.route}</span>
-                <strong>{route.price.toLocaleString()} ريال</strong>
-              </li>
+              <div key={route.id} className="flex-between" style={{ padding: '1rem', borderRadius: 'var(--radius-md)', background: 'var(--bg-primary)' }}>
+                <span style={{ fontWeight: '600' }}>{route.route}</span>
+                <strong style={{ color: 'var(--primary-color)', fontSize: '1.1rem' }}>{route.price.toLocaleString()} ريال</strong>
+              </div>
             ))}
-            {tripSettings.length === 0 && <li className="text-secondary">لا توجد خطوط. الرجاء إضافتها من الإعدادات.</li>}
-          </ul>
+            {tripSettings.length === 0 && <p className="text-secondary">لا توجد خطوط. الرجاء إضافتها من الإعدادات.</p>}
+          </div>
         </div>
         
-        <div className="card" style={{ marginBottom: 0, backgroundColor: 'var(--primary-color)', color: 'white' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '1rem' }}>
-            <Bus size={32} />
-            <h3 style={{ margin: 0, color: 'white' }}>رحلات/حجوزات اليوم</h3>
+        <div className="card" style={{ margin: 0, backgroundColor: 'var(--primary-color)', color: 'white', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem', marginBottom: '1.5rem' }}>
+            <div style={{ backgroundColor: 'rgba(255,255,255,0.2)', padding: '1rem', borderRadius: 'var(--radius-lg)' }}>
+              <Bus size={48} />
+            </div>
+            <div>
+              <h3 style={{ margin: 0, color: 'white', fontSize: '1.5rem', fontWeight: '800' }}>حجوزات اليوم</h3>
+              <p style={{ opacity: 0.9, fontSize: '1.1rem' }}>إجمالي الركاب: {totalPassengers} راكب</p>
+            </div>
           </div>
-          <p style={{ fontSize: '2rem', fontWeight: 'bold' }}>{bookings.length} حجوزات</p>
-          <p style={{ opacity: 0.8 }}>إجمالي الركاب: {totalPassengers} راكب</p>
+          <p style={{ fontSize: '3.5rem', fontWeight: '900', lineHeight: 1 }}>{bookings.length}</p>
+          <p style={{ opacity: 0.8, marginTop: '0.5rem', fontSize: '1.1rem' }}>تذكرة مؤكدة</p>
         </div>
       </div>
 
@@ -173,40 +181,16 @@ const Trips = () => {
       </div>
 
       {showBookingModal && createPortal(
-        <div 
-          style={{
-            position: 'fixed',
-            top: 0, left: 0, right: 0, bottom: 0,
-            backgroundColor: 'rgba(0,0,0,0.8)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            zIndex: 999999
-          }}
-        >
-          <div 
-            style={{
-              backgroundColor: 'var(--bg-secondary, #1e293b)',
-              color: 'var(--text-primary, #ffffff)',
-              borderRadius: '8px',
-              width: '90%',
-              maxWidth: '500px',
-              maxHeight: '90vh',
-              display: 'flex',
-              flexDirection: 'column',
-              boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1)',
-              border: '1px solid var(--border-color, #334155)',
-              overflow: 'hidden'
-            }}
-          >
-            <div style={{ padding: '1.5rem', borderBottom: '1px solid var(--border-color, #334155)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <h2 style={{ fontSize: '1.25rem', margin: 0 }}>حجز تذكرة جديدة</h2>
-              <button type="button" onClick={() => setShowBookingModal(false)} style={{ background: 'transparent', border: 'none', color: 'inherit', cursor: 'pointer' }}><X size={20} /></button>
+        <div className="modal-overlay" onClick={() => setShowBookingModal(false)}>
+          <div className="modal" onClick={e => e.stopPropagation()}>
+            <div className="modal-header">
+              <h2>حجز تذكرة جديدة</h2>
+              <button className="btn-icon" onClick={() => setShowBookingModal(false)}><X size={24} /></button>
             </div>
             
-            <div style={{ padding: '1.5rem', overflowY: 'auto' }}>
+            <div className="modal-body">
               <form onSubmit={handleBookingSubmit}>
-                <div className="form-group mb-4">
+                <div className="form-group">
                   <label className="form-label">الوجهة (الخط)</label>
                   <select className="form-control" value={bookingData.routeId} onChange={e => setBookingData({...bookingData, routeId: e.target.value})} required>
                     <option value="">-- اختر الخط --</option>
@@ -215,11 +199,11 @@ const Trips = () => {
                     ))}
                   </select>
                 </div>
-                <div className="form-group mb-4">
+                <div className="form-group">
                   <label className="form-label">اسم الراكب كامل</label>
                   <input type="text" className="form-control" required value={bookingData.passenger} onChange={e => setBookingData({...bookingData, passenger: e.target.value})} />
                 </div>
-                <div className="grid-2 mb-4">
+                <div className="grid-2">
                   <div className="form-group">
                     <label className="form-label">رقم الهاتف</label>
                     <input type="text" className="form-control" required value={bookingData.phone} onChange={e => setBookingData({...bookingData, phone: e.target.value})} />
@@ -229,14 +213,14 @@ const Trips = () => {
                     <input type="number" min="1" className="form-control" required value={bookingData.tickets} onChange={e => setBookingData({...bookingData, tickets: parseInt(e.target.value)})} />
                   </div>
                 </div>
-                <div className="grid-2 mb-4" style={{ alignItems: 'center' }}>
-                  <div className="form-group" style={{ marginBottom: 0 }}>
-                    <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', cursor: 'pointer', fontWeight: '500' }}>
-                      <input type="checkbox" checked={bookingData.delivery} onChange={e => setBookingData({...bookingData, delivery: e.target.checked})} style={{ width: '18px', height: '18px' }} />
+                <div className="grid-2" style={{ alignItems: 'center' }}>
+                  <div className="form-group">
+                    <label style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', cursor: 'pointer', fontWeight: '600' }}>
+                      <input type="checkbox" checked={bookingData.delivery} onChange={e => setBookingData({...bookingData, delivery: e.target.checked})} style={{ width: '20px', height: '20px' }} />
                       طلب توصيل للمنزل
                     </label>
                   </div>
-                  <div className="form-group" style={{ marginBottom: 0 }}>
+                  <div className="form-group">
                     <label className="form-label">طريقة الدفع</label>
                     <select className="form-control" value={bookingData.paymentMethod} onChange={e => setBookingData({...bookingData, paymentMethod: e.target.value})}>
                       <option>نقداً</option>
@@ -246,20 +230,17 @@ const Trips = () => {
                 </div>
                 
                 {bookingData.routeId && (
-                  <>
-                    <hr style={{ margin: '1.5rem 0', borderColor: 'var(--border-color, #334155)' }} />
-                    <div className="flex-between">
-                      <strong style={{ fontSize: '1.25rem' }}>المبلغ الإجمالي:</strong>
-                      <span className="text-success" style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#10b981' }}>
-                        {((tripSettings.find(r => r.id.toString() === bookingData.routeId.toString())?.price || 0) * bookingData.tickets).toLocaleString()} ريال
-                      </span>
-                    </div>
-                  </>
+                  <div style={{ margin: '2rem 0', padding: '1.5rem', background: 'var(--success-soft)', borderRadius: 'var(--radius-md)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <strong style={{ fontSize: '1.25rem' }}>المبلغ الإجمالي:</strong>
+                    <span style={{ fontSize: '2rem', fontWeight: '900', color: 'var(--success-color)' }}>
+                      {((tripSettings.find(r => r.id.toString() === bookingData.routeId.toString())?.price || 0) * bookingData.tickets).toLocaleString()} ريال
+                    </span>
+                  </div>
                 )}
 
-                <div style={{ marginTop: '2rem', display: 'flex', justifyContent: 'flex-end', gap: '1rem' }}>
-                  <button type="button" className="btn" onClick={() => setShowBookingModal(false)} style={{ border: '1px solid var(--border-color)', backgroundColor: 'transparent', color: 'inherit' }}>إلغاء</button>
-                  <button type="submit" className="btn btn-primary" disabled={!bookingData.routeId} style={{ backgroundColor: '#3b82f6', color: 'white' }}>تأكيد الحجز</button>
+                <div className="modal-footer">
+                  <button type="button" className="btn" onClick={() => setShowBookingModal(false)} style={{ border: '1px solid var(--border-color)' }}>إلغاء</button>
+                  <button type="submit" className="btn btn-primary" disabled={!bookingData.routeId}>تأكيد الحجز</button>
                 </div>
               </form>
             </div>
@@ -269,57 +250,34 @@ const Trips = () => {
       )}
 
       {showSettingsModal && createPortal(
-        <div 
-          style={{
-            position: 'fixed',
-            top: 0, left: 0, right: 0, bottom: 0,
-            backgroundColor: 'rgba(0,0,0,0.8)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            zIndex: 999999
-          }}
-        >
-          <div 
-            style={{
-              backgroundColor: 'var(--bg-secondary, #1e293b)',
-              color: 'var(--text-primary, #ffffff)',
-              borderRadius: '8px',
-              width: '90%',
-              maxWidth: '500px',
-              maxHeight: '90vh',
-              display: 'flex',
-              flexDirection: 'column',
-              boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1)',
-              border: '1px solid var(--border-color, #334155)',
-              overflow: 'hidden'
-            }}
-          >
-            <div style={{ padding: '1.5rem', borderBottom: '1px solid var(--border-color, #334155)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <h2 style={{ fontSize: '1.25rem', margin: 0 }}>إعدادات تسعير الخطوط</h2>
-              <button type="button" onClick={() => setShowSettingsModal(false)} style={{ background: 'transparent', border: 'none', color: 'inherit', cursor: 'pointer' }}><X size={20} /></button>
+        <div className="modal-overlay" onClick={() => setShowSettingsModal(false)}>
+          <div className="modal" onClick={e => e.stopPropagation()}>
+            <div className="modal-header">
+              <h2>إعدادات تسعير الخطوط</h2>
+              <button className="btn-icon" onClick={() => setShowSettingsModal(false)}><X size={24} /></button>
             </div>
             
-            <div style={{ padding: '1.5rem', overflowY: 'auto' }}>
-              <div className="mb-6">
+            <div className="modal-body">
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', marginBottom: '2rem' }}>
                 {tripSettings.map(r => (
-                  <div key={r.id} className="form-group flex-between mb-4">
-                    <input type="text" className="form-control" readOnly value={r.route} style={{ width: '55%' }} />
-                    <input type="number" className="form-control" readOnly value={r.price} style={{ width: '30%' }} />
-                    <button type="button" onClick={() => handleDeleteRoute(r.id)} style={{ background: 'transparent', border: 'none', cursor: 'pointer' }}><Trash2 size={18} className="text-danger"/></button>
+                  <div key={r.id} style={{ display: 'flex', gap: '1rem', alignItems: 'center', background: 'var(--bg-primary)', padding: '1rem', borderRadius: 'var(--radius-md)' }}>
+                    <input type="text" className="form-control" readOnly value={r.route} style={{ flex: 2 }} />
+                    <input type="number" className="form-control" readOnly value={r.price} style={{ flex: 1 }} />
+                    <button className="btn-icon" onClick={() => handleDeleteRoute(r.id)}><Trash2 size={20} className="text-danger"/></button>
                   </div>
                 ))}
               </div>
-              <hr style={{ margin: '1.5rem 0', borderColor: 'var(--border-color, #334155)' }} />
-              <h4>إضافة خط جديد</h4>
-              <div className="form-group flex-between mt-4">
-                <input type="text" className="form-control" placeholder="اسم الخط..." value={newRoute.route} onChange={e => setNewRoute({...newRoute, route: e.target.value})} style={{ width: '55%' }} />
-                <input type="number" className="form-control" placeholder="السعر" value={newRoute.price} onChange={e => setNewRoute({...newRoute, price: e.target.value})} style={{ width: '30%' }} />
-                <button type="button" className="btn btn-primary" onClick={handleAddRoute} style={{ backgroundColor: '#3b82f6', color: 'white' }}><Plus size={18} /></button>
+              <div style={{ borderTop: '2px dashed var(--border-color)', paddingTop: '2rem' }}>
+                <h4 style={{ marginBottom: '1.5rem' }}>إضافة خط جديد</h4>
+                <div style={{ display: 'flex', gap: '1rem' }}>
+                  <input type="text" className="form-control" placeholder="اسم الخط..." value={newRoute.route} onChange={e => setNewRoute({...newRoute, route: e.target.value})} style={{ flex: 2 }} />
+                  <input type="number" className="form-control" placeholder="السعر" value={newRoute.price} onChange={e => setNewRoute({...newRoute, price: e.target.value})} style={{ flex: 1 }} />
+                  <button className="btn btn-primary" onClick={handleAddRoute}><Plus size={24} /></button>
+                </div>
               </div>
             </div>
-            <div style={{ padding: '1.5rem', display: 'flex', justifyContent: 'flex-end', borderTop: '1px solid var(--border-color, #334155)' }}>
-              <button type="button" className="btn" onClick={() => setShowSettingsModal(false)} style={{ border: '1px solid var(--border-color)', backgroundColor: 'transparent', color: 'inherit' }}>إغلاق</button>
+            <div className="modal-footer">
+              <button type="button" className="btn" onClick={() => setShowSettingsModal(false)} style={{ border: '1px solid var(--border-color)' }}>إغلاق</button>
             </div>
           </div>
         </div>,

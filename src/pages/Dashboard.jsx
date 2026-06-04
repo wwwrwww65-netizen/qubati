@@ -14,40 +14,45 @@ const Dashboard = () => {
 
   return (
     <div>
-      <div className="flex-between mb-6">
-        <h1 style={{ fontSize: '1.5rem', fontWeight: 'bold' }}>لوحة القيادة</h1>
-        <button className="btn btn-primary">تصدير تقرير PDF</button>
+      <div className="flex-between mb-8">
+        <div>
+          <h1 style={{ fontSize: '2.5rem', fontWeight: '900', color: 'var(--text-primary)' }}>لوحة القيادة</h1>
+          <p style={{ color: 'var(--text-secondary)', fontSize: '1.1rem' }}>نظرة عامة على أداء النظام والعمليات الحالية</p>
+        </div>
+        <button className="btn btn-primary">
+          تصدير تقرير PDF
+        </button>
       </div>
 
-      <div className="grid-4 mb-6">
+      <div className="grid-4 mb-8">
         <div className="stat-card">
-          <div className="stat-icon"><Wallet size={24} /></div>
+          <div className="stat-icon"><Wallet size={32} /></div>
           <div className="stat-content">
             <h3>رصيد المحفظة الإجمالي</h3>
             <p>{totalBalance.toLocaleString()} ريال</p>
           </div>
         </div>
-        <div className="stat-card">
-          <div className="stat-icon" style={{ backgroundColor: 'rgba(16, 185, 129, 0.1)', color: 'var(--success-color)' }}>
-            <Users size={24} />
+        <div className="stat-card" style={{ '--primary-color': 'var(--success-color)', '--primary-soft': 'var(--success-soft)' }}>
+          <div className="stat-icon">
+            <Users size={32} />
           </div>
           <div className="stat-content">
             <h3>المستخدمين</h3>
             <p>{users.length} مستخدم</p>
           </div>
         </div>
-        <div className="stat-card">
-          <div className="stat-icon" style={{ backgroundColor: 'rgba(245, 158, 11, 0.1)', color: 'var(--warning-color)' }}>
-            <Wrench size={24} />
+        <div className="stat-card" style={{ '--primary-color': 'var(--warning-color)', '--primary-soft': 'var(--warning-soft)' }}>
+          <div className="stat-icon">
+            <Wrench size={32} />
           </div>
           <div className="stat-content">
             <h3>عمليات الصيانة</h3>
             <p>{maintenanceRecords.length} عملية</p>
           </div>
         </div>
-        <div className="stat-card">
-          <div className="stat-icon" style={{ backgroundColor: 'rgba(239, 68, 68, 0.1)', color: 'var(--danger-color)' }}>
-            <Bus size={24} />
+        <div className="stat-card" style={{ '--primary-color': 'var(--danger-color)', '--primary-soft': 'var(--danger-soft)' }}>
+          <div className="stat-icon">
+            <Bus size={32} />
           </div>
           <div className="stat-content">
             <h3>إجمالي الحجوزات</h3>
@@ -58,7 +63,10 @@ const Dashboard = () => {
 
       <div className="grid-2">
         <div className="card">
-          <h3 className="mb-4">أحدث العمليات المالية</h3>
+          <div className="flex-between mb-6">
+            <h3 style={{ fontSize: '1.5rem', fontWeight: '700' }}>أحدث العمليات المالية</h3>
+            <button className="btn" style={{ fontSize: '0.9rem', color: 'var(--primary-color)' }}>عرض الكل</button>
+          </div>
           <div className="table-wrapper">
             <table className="table">
               <thead>
@@ -87,15 +95,17 @@ const Dashboard = () => {
         </div>
 
         <div className="card">
-          <h3 className="mb-4">التنبيهات السريعة</h3>
-          <ul style={{ listStyle: 'none' }}>
-            <li style={{ padding: '1rem', borderBottom: '1px solid var(--border-color)' }}>
-              <strong className="text-warning">تنبيه فحص:</strong> 3 مركبات اقترب موعد فحصها الدوري.
-            </li>
-            <li style={{ padding: '1rem' }}>
-              <strong className="text-success">تنبيه نظام:</strong> تم أخذ نسخة احتياطية محلية بنجاح.
-            </li>
-          </ul>
+          <h3 className="mb-6" style={{ fontSize: '1.5rem', fontWeight: '700' }}>التنبيهات السريعة</h3>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+            <div style={{ padding: '1.25rem', borderRadius: 'var(--radius-md)', background: 'var(--warning-soft)', borderRight: '4px solid var(--warning-color)' }}>
+              <p style={{ fontWeight: '700', color: 'var(--warning-color)', marginBottom: '0.25rem' }}>تنبيه فحص</p>
+              <p style={{ fontSize: '1rem' }}>3 مركبات اقترب موعد فحصها الدوري.</p>
+            </div>
+            <div style={{ padding: '1.25rem', borderRadius: 'var(--radius-md)', background: 'var(--success-soft)', borderRight: '4px solid var(--success-color)' }}>
+              <p style={{ fontWeight: '700', color: 'var(--success-color)', marginBottom: '0.25rem' }}>تنبيه نظام</p>
+              <p style={{ fontSize: '1rem' }}>تم أخذ نسخة احتياطية محلية بنجاح.</p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
