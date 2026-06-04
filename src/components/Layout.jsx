@@ -10,7 +10,16 @@ import {
   LogOut,
   Moon,
   Sun,
-  Menu
+  Menu,
+  Truck,
+  UserCog,
+  MapPin,
+  Package,
+  CreditCard,
+  Fuel,
+  FileBarChart,
+  ShieldCheck,
+  MessageSquare
 } from 'lucide-react';
 
 const Layout = () => {
@@ -18,7 +27,6 @@ const Layout = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const location = useLocation();
 
-  // Close sidebar when route changes on mobile
   useEffect(() => {
     setIsSidebarOpen(false);
   }, [location.pathname]);
@@ -31,62 +39,98 @@ const Layout = () => {
     }
   }, [isDark]);
 
-  const navItems = [
-    { path: '/', label: 'لوحة القيادة', icon: <LayoutDashboard size={24} /> },
-    { path: '/wallet', label: 'المحفظة المالية', icon: <Wallet size={24} /> },
-    { path: '/maintenance', label: 'ورشة الصيانة', icon: <Wrench size={24} /> },
-    { path: '/inspection', label: 'الفحص الدوري', icon: <ClipboardCheck size={24} /> },
-    { path: '/trips', label: 'حجز الرحلات', icon: <Bus size={24} /> },
-    { path: '/users', label: 'إدارة المستخدمين', icon: <Users size={24} /> },
+  const navGroups = [
+    {
+      label: 'الرئيسية',
+      items: [
+        { path: '/', label: 'لوحة القيادة', icon: <LayoutDashboard size={20} /> },
+        { path: '/wallet', label: 'المحفظة المالية', icon: <Wallet size={20} /> },
+      ]
+    },
+    {
+      label: 'العمليات الأساسية',
+      items: [
+        { path: '/trips', label: 'حجز الرحلات', icon: <Bus size={20} /> },
+        { path: '/shipping', label: 'الشحن والطرود', icon: <Package size={20} /> },
+        { path: '/bill-payments', label: 'سداد الفواتير', icon: <CreditCard size={20} /> },
+      ]
+    },
+    {
+      label: 'الفحص والصيانة',
+      items: [
+        { path: '/maintenance', label: 'ورشة الصيانة', icon: <Wrench size={20} /> },
+        { path: '/inspection', label: 'الفحص الدوري', icon: <ClipboardCheck size={20} /> },
+        { path: '/fuel', label: 'إدارة الوقود', icon: <Fuel size={20} /> },
+      ]
+    },
+    {
+      label: 'إدارة البيانات',
+      items: [
+        { path: '/vehicles', label: 'إدارة الأسطول', icon: <Truck size={20} /> },
+        { path: '/engineers', label: 'إدارة المهندسين', icon: <UserCog size={20} /> },
+        { path: '/stations', label: 'إدارة المحطات', icon: <MapPin size={20} /> },
+      ]
+    },
+    {
+      label: 'الرقابة والتقارير',
+      items: [
+        { path: '/reports', label: 'مركز التقارير', icon: <FileBarChart size={20} /> },
+        { path: '/audit', label: 'السجل الرقابي', icon: <ShieldCheck size={20} /> },
+        { path: '/notifications', label: 'الإشعارات', icon: <MessageSquare size={20} /> },
+        { path: '/users', label: 'إدارة المستخدمين', icon: <Users size={20} /> },
+      ]
+    }
   ];
 
   return (
     <div className="app-container">
-      {/* Sidebar Overlay for Mobile */}
       {isSidebarOpen && <div className="sidebar-overlay" onClick={() => setIsSidebarOpen(false)} />}
 
-      {/* Sidebar */}
       <aside className={`sidebar ${isSidebarOpen ? 'open' : ''}`}>
         <div className="sidebar-header">
           <span>القباطي</span>
-          <span style={{ color: 'var(--text-primary)', opacity: 0.5, marginRight: '5px' }}>ERP</span>
+          <span style={{ color: 'var(--text-primary)', opacity: 0.5, marginRight: '8px', fontSize: '1rem' }}>ERP</span>
         </div>
         <nav className="sidebar-nav">
-          {navItems.map((item) => (
-            <Link 
-              key={item.path} 
-              to={item.path} 
-              className={`nav-item ${location.pathname === item.path ? 'active' : ''}`}
-            >
-              <span className="nav-icon">{item.icon}</span>
-              <span>{item.label}</span>
-            </Link>
+          {navGroups.map((group, gIdx) => (
+            <div key={gIdx}>
+              <div className="nav-group-label">{group.label}</div>
+              {group.items.map((item) => (
+                <Link
+                  key={item.path}
+                  to={item.path}
+                  className={`nav-item ${location.pathname === item.path ? 'active' : ''}`}
+                >
+                  <span className="nav-icon">{item.icon}</span>
+                  <span>{item.label}</span>
+                </Link>
+              ))}
+            </div>
           ))}
         </nav>
         <div className="sidebar-footer" style={{ padding: '1rem', borderTop: '1px solid var(--border-color)' }}>
-          <button className="nav-item logout-btn" style={{ width: '100%', background: 'transparent', border: 'none', cursor: 'pointer', color: 'var(--danger-color)' }}>
-            <LogOut size={24} />
+          <button className="nav-item logout-btn" style={{ width: '100%', background: 'transparent', border: 'none', cursor: 'pointer', color: 'var(--danger-color)', display: 'flex', alignItems: 'center', gap: '0.75rem', fontWeight: '700' }}>
+            <LogOut size={20} />
             <span>تسجيل الخروج</span>
           </button>
         </div>
       </aside>
 
-      {/* Main Content Wrapper */}
       <main className="main-content">
         <header className="header">
-          <div className="flex-between" style={{ width: '100%' }}>
-            <div className="flex-between" style={{ gap: '1.5rem' }}>
-              <button className="btn-icon" onClick={() => setIsSidebarOpen(!isSidebarOpen)}>
-                <Menu size={28} />
+          <div className="flex justify-between items-center w-full">
+            <div className="flex items-center gap-4">
+              <button className="btn-icon" style={{ display: window.innerWidth <= 1200 ? 'flex' : 'none' }} onClick={() => setIsSidebarOpen(!isSidebarOpen)}>
+                <Menu size={24} />
               </button>
-              <h2 style={{ fontSize: '1.5rem', fontWeight: '800' }}>مرحباً بك، مدير النظام 👋</h2>
+              <h2 className="text-xl font-black">مرحباً بك، مدير النظام 👋</h2>
             </div>
             
-            <div className="flex-between" style={{ gap: '1.5rem' }}>
-              <button className="btn-icon" onClick={() => setIsDark(!isDark)} style={{ width: '50px', height: '50px' }}>
-                {isDark ? <Sun size={24} /> : <Moon size={24} />}
+            <div className="flex items-center gap-4">
+              <button className="btn-icon" onClick={() => setIsDark(!isDark)}>
+                {isDark ? <Sun size={20} /> : <Moon size={20} />}
               </button>
-              <div className="user-profile" style={{ width: '50px', height: '50px', borderRadius: 'var(--radius-md)', backgroundColor: 'var(--primary-color)', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 'bold', fontSize: '1.25rem', boxShadow: 'var(--shadow-md)' }}>
+              <div className="user-profile" style={{ width: '40px', height: '40px', borderRadius: 'var(--radius-md)', backgroundColor: 'var(--primary-color)', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 'bold', boxShadow: 'var(--shadow-sm)' }}>
                 م
               </div>
             </div>

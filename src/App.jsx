@@ -8,6 +8,15 @@ import Inspection from './pages/Inspection';
 import Trips from './pages/Trips';
 import Users from './pages/Users';
 import Login from './pages/Login';
+import Engineers from './pages/Engineers';
+import Vehicles from './pages/Vehicles';
+import Stations from './pages/Stations';
+import Shipping from './pages/Shipping';
+import BillPayments from './pages/BillPayments';
+import FuelManagement from './pages/FuelManagement';
+import Reports from './pages/Reports';
+import AuditTrail from './pages/AuditTrail';
+import Notifications from './pages/Notifications';
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -35,6 +44,17 @@ function App() {
           <Route path="inspection" element={<Inspection />} />
           <Route path="trips" element={<Trips />} />
           <Route path="users" element={<Users />} />
+
+          {/* New Routes */}
+          <Route path="engineers" element={<Engineers />} />
+          <Route path="vehicles" element={<Vehicles />} />
+          <Route path="stations" element={<Stations />} />
+          <Route path="shipping" element={<Shipping />} />
+          <Route path="bill-payments" element={<BillPayments />} />
+          <Route path="fuel" element={<FuelManagement />} />
+          <Route path="reports" element={<Reports />} />
+          <Route path="audit" element={<AuditTrail />} />
+          <Route path="notifications" element={<Notifications />} />
         </Route>
       </Routes>
     </Router>
