@@ -118,15 +118,15 @@ const Layout = () => {
 
       <main className="main-content">
         <header className="header">
-          <div className="flex justify-between items-center w-full">
-            <div className="flex items-center gap-4">
-              <button className="btn-icon" style={{ display: window.innerWidth <= 1200 ? 'flex' : 'none' }} onClick={() => setIsSidebarOpen(!isSidebarOpen)}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+              <button className="btn-icon mobile-menu-btn" onClick={() => setIsSidebarOpen(!isSidebarOpen)}>
                 <Menu size={24} />
               </button>
-              <h2 className="text-xl font-black">مرحباً بك، مدير النظام 👋</h2>
+              <h2 className="font-black" style={{ fontSize: '1.25rem', margin: 0 }}>مرحباً بك، مدير النظام 👋</h2>
             </div>
             
-            <div className="flex items-center gap-4">
+            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
               <button className="btn-icon" onClick={() => setIsDark(!isDark)}>
                 {isDark ? <Sun size={20} /> : <Moon size={20} />}
               </button>
